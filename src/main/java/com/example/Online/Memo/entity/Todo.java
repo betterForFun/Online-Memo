@@ -1,8 +1,7 @@
-package com.example.Online.Memo.todo;
+package com.example.Online.Memo.entity;
 
 import java.time.LocalDate;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -12,13 +11,11 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 public class Todo {
-	
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
 	private String username;
-	
 	@Size(min = 1, message = "Description cannot be Empty")
 	private String description;
 	private LocalDate date;

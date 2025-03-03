@@ -1,6 +1,5 @@
-package com.example.Online.Memo.login;
+package com.example.Online.Memo.controller;
 
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

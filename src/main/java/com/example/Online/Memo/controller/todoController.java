@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.Online.Memo.entity.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -24,7 +25,8 @@ public class todoController {
 	@RequestMapping("todos")
 	public String listAllTodos(ModelMap model) {
 		String userName = (String)model.get("name");
-		List<Todo> todos = todoRepository.findByUsername(userName);
+		Sort sort = Sort.by(Sort.Order.asc("date"));
+		List<Todo> todos = todoRepository.findByUsername(userName,sort);
 		model.addAttribute("todos", todos);
 		return "todos";
 	}
@@ -43,6 +45,11 @@ public class todoController {
 			return "add-todo";
 		}
 		String username = (String)model.get("name");
+		LocalDate date = todo.getDate();
+		if(date.isBefore(LocalDate.now())) {
+			result.rejectValue("date", "error.todo.date", "Date cannot be in the past");
+            return "add-todo";
+		}
 		todo.setUsername(username);
 		todoRepository.save(todo);
 		return "redirect:todos";

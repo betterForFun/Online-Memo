@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity
-public class Todo {
+public class todo {
 
 	@Id
 	@GeneratedValue
@@ -51,10 +51,10 @@ public class Todo {
 		this.done = done;
 	}
 	
-	public Todo() {
+	public todo() {
 		super();
 	}
-	public Todo(int id, String username, String description, LocalDate date, boolean done) {
+	public todo(int id, String username, String description, LocalDate date, boolean done) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -67,10 +67,4 @@ public class Todo {
 		return "Todo [id=" + id + ", username=" + username + ", description=" + description + ", date=" + date
 				+ ", done=" + done + "]";
 	}
-	
-	
-	
-	
-	
-
 }

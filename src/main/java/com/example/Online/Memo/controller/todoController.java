@@ -3,16 +3,13 @@ package com.example.Online.Memo.controller;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.example.Online.Memo.entity.Todo;
+import com.example.Online.Memo.entity.todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
@@ -26,7 +23,7 @@ public class todoController {
 	public String listAllTodos(ModelMap model) {
 		String userName = (String)model.get("name");
 		Sort sort = Sort.by(Sort.Order.asc("date"));
-		List<Todo> todos = todoRepository.findByUsername(userName,sort);
+		List<todo> todos = todoRepository.findByUsername(userName,sort);
 		model.addAttribute("todos", todos);
 		return "todos";
 	}
@@ -34,13 +31,13 @@ public class todoController {
 	@RequestMapping(value = "add-todo", method = RequestMethod.GET)
 	public String showAddPage(ModelMap model){
 		String username = (String)model.get("name");
-		Todo todo = new Todo(0, username, "", LocalDate.now().plusYears(1), false);
+		todo todo = new todo(0, username, "", LocalDate.now().plusYears(1), false);
 		model.put("todo", todo);
 		return "add-todo";
 	}
 	
 	@RequestMapping(value = "add-todo", method = RequestMethod.POST)
-	public String addtodo(ModelMap model, @Valid Todo todo, BindingResult result){
+	public String addtodo(ModelMap model, @RequestBody @Valid todo todo, BindingResult result){
 		if(result.hasErrors()) {
 			return "add-todo";
 		}
@@ -63,13 +60,13 @@ public class todoController {
 	
 	@RequestMapping(value = "update-todo", method = RequestMethod.GET)
 	public String showUpdatePage(@RequestParam int id, ModelMap model){
-		Todo todo = todoRepository.findById(id).get();
+		todo todo = todoRepository.findById(id).get();
 		model.addAttribute("todo", todo);
 		return "update-todo";
 	}
 	
 	@RequestMapping(value = "update-todo", method = RequestMethod.POST)
-	public String updatetodo(ModelMap model, @Valid Todo todo, BindingResult result){
+	public String updatetodo(ModelMap model, @Valid todo todo, BindingResult result){
 		if(result.hasErrors()) {
 			return "update-todo";
 		}
